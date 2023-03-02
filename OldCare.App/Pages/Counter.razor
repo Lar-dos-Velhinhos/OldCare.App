@@ -1,0 +1,60 @@
+﻿@page "/counter"
+@layout EmptyLayout
+@using System.ComponentModel.DataAnnotations
+@using System.Text.Encodings.Web
+@using System.ComponentModel
+@using System.Net
+
+<link href="style.css" rel="stylesheet"/>
+
+<MudPaper Style="background-image: url('https://i.imgur.com/qX8eqRn.png'); background-repeat: no-repeat; background-size: cover; height: 100vh;">
+    <MudContainer Fixed="true" Class="d-flex flex-row-reverse align-content-center flex-wrap flex-grow-1 gap-4" Elevation="0" Style="height: 100vh;">
+        <MudPaper Width="30%" Square="true" Class="mud-theme-primary">
+            <EditForm Model="@model" OnValidSubmit="OnValidSubmit">
+                <DataAnnotationsValidator/>
+                <MudGrid>
+                    <MudItem xs="12" sm="7">
+                        <MudCard Style="font-family: quicksand-regular; background-color: white;">
+                            <MudCardContent>
+                                <MudText Align="Align.Center" Typo="Typo.h1" Style="font-family: kanit-bold; font-size: 36pt;">OLDCARE</MudText>
+                                <MudTextField Label="👤 E-mail" Class="mt-3" @bind-Value="model.Email" For="@(() => model.Email)"/>
+                                <MudTextField Label="🔑 Senha" HelperText="Digite uma senha forte" Class="mt-3" @bind-Value="model.Password" For="@(() => model.Password)" InputType="InputType.Password"/>
+                            </MudCardContent>
+                            <MudCardActions>
+                                <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto mud-theme-info py-3 px-3 rounded-lg" FullWidth="true">ENTRAR</MudButton>
+                            </MudCardActions>
+                        </MudCard>
+                    </MudItem>
+                    <MudItem xs="12" sm="7">
+                        <MudText Typo="Typo.body2" Align="Align.Center">
+                            Esqueceu sua senha?
+                        </MudText>
+                    </MudItem>
+                </MudGrid>
+            </EditForm>
+        </MudPaper>
+    </MudContainer>
+</MudPaper>
+
+@code {
+    RegisterAccountForm model = new RegisterAccountForm();
+
+    public class RegisterAccountForm
+    {
+        [Display(Name = "E-mail")]
+        [Required(ErrorMessage = "Digite o e-mail.")]
+        [EmailAddress(ErrorMessage = "Digite um e-mail válido.")]
+        public string Email { get; set; } = null!;
+
+        [Display(Name = "Senha")]
+        [Required(ErrorMessage = "Digite a senha.")]
+        [StringLength(30, ErrorMessage = "A senha deve ter pelo menos 8 caracteres.", MinimumLength = 8)]
+        public string Password { get; set; } = null!;
+    }
+
+    private void OnValidSubmit(EditContext context)
+    {
+        StateHasChanged();
+    }
+
+}

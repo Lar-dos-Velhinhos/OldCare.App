@@ -1,0 +1,91 @@
+﻿@using OldCare.App.Models
+@inherits LayoutComponentBase
+
+<MudThemeProvider Theme="_theme" />
+<MudDialogProvider />
+<MudSnackbarProvider />
+
+<MudLayout>
+    <MudAppBar Color="Color.Transparent"
+               Elevation="1">
+        <MudIconButton Color="Color.Inherit"
+                       Edge="Edge.Start"
+                       Icon="@Icons.Material.Filled.Menu"
+                       OnClick="@(() => _drawerOpen = !_drawerOpen)" />
+        <MudSpacer />
+        <div>
+            <MudSelect Class="mx-4"
+                       Dense="true"
+                       Label="Theme Manager Config"
+                       Style="max-width: 250px"
+                       T="string"
+                       Value="_themeManagerConfiguration.Key"
+                       ValueChanged="ThemeManagerConfigChanged">
+                @foreach (var config in _themeManagerConfigurations)
+                {
+                    <MudSelectItem T="string"
+                                   Value="config.Key" />
+                }
+            </MudSelect>
+        </div>
+        <MudIconButton Color="Color.Inherit"
+                       Edge="Edge.End"
+                       Icon="@Icons.Material.Filled.MoreVert" />
+    </MudAppBar>
+    <MudDrawer @bind-Open="@_drawerOpen"
+               Elevation="1">
+        <MudText Class="pt-2 px-4"
+                 Typo="Typo.h6">
+            Theme Manager
+        </MudText>
+        <MudText Class="mud-text-secondary px-4"
+                 Typo="Typo.body2">
+            Test Application
+        </MudText>
+        <NavMenu />
+    </MudDrawer>
+    <MudThemeManager @bind-Open="_themeManagerOpen"
+                     @bind-Theme="_theme"
+                     Configuration="_themeManagerConfiguration.Value" />
+    <MudThemeManagerButton OnClick="@(e => _themeManagerOpen = true)" />
+    <MudMainContent>
+        <MudContainer Class="mt-16 px-16"
+                      MaxWidth="MaxWidth.False">
+            @Body
+        </MudContainer>
+    </MudMainContent>
+</MudLayout>
+
+@code {
+
+    private readonly Dictionary<string, ThemeManagerConfiguration> _themeManagerConfigurations = new()
+    {
+        {"Preset One", ThemeManagerPresetConfigurations.GetPresetConfigOne()},
+        {"Preset Two", ThemeManagerPresetConfigurations.GetPresetConfigTwo()}
+    };
+
+    private MudTheme _theme = new()
+    {
+        Palette = new Palette
+        {
+            Primary = Colors.Green.Default,
+            Secondary = Colors.Amber.Default
+        }
+    };
+
+    private KeyValuePair<string, ThemeManagerConfiguration> _themeManagerConfiguration;
+
+    private bool _drawerOpen;
+    private bool _themeManagerOpen;
+
+    protected override void OnInitialized()
+    {
+        _themeManagerConfiguration = _themeManagerConfigurations.First();
+    }
+
+    private void ThemeManagerConfigChanged(string key)
+    {
+        _themeManagerConfiguration = _themeManagerConfigurations.FirstOrDefault(x => x.Key == key);
+    }
+
+}
