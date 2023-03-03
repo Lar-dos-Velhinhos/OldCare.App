@@ -1,0 +1,91 @@
+﻿@inherits LayoutComponentBase
+
+<MudThemeProvider Theme="_theme" />
+<MudDialogProvider />
+<MudSnackbarProvider />
+
+<MudLayout>
+    <MudAppBar Elevation="0">
+        <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
+        <MudSpacer />
+        <MudIconButton Icon="@Icons.Custom.Brands.MudBlazor" Color="Color.Inherit" Link="https://mudblazor.com/" Target="_blank" />
+        <MudIconButton Icon="@Icons.Custom.Brands.GitHub" Color="Color.Inherit" Link="https://github.com/MudBlazor/MudBlazor/" Target="_blank" />
+    </MudAppBar>
+    <MudDrawer @bind-Open="_drawerOpen" Elevation="1">
+        <MudDrawerHeader>
+            <MudText Typo="Typo.h6">OldCare.App</MudText>
+        </MudDrawerHeader>
+        <NavMenu />
+    </MudDrawer>
+    <MudMainContent>
+        <MudContainer MaxWidth="MaxWidth.Large" Class="my-16 pt-16">
+            @Body
+        </MudContainer>
+    </MudMainContent>
+</MudLayout>
+
+@code {
+    bool _drawerOpen = true;
+
+    MudTheme _theme = new MudTheme()
+    {
+        Palette = new Palette()
+        {
+            #region Main
+
+            Black = "#110e2dff",
+            White = "#F5F5F5",
+
+            #endregion
+
+            #region Default Palette
+
+            Primary = "#0070E7",
+            Secondary = "#00CA89",
+            Tertiary = "#2A2D30",
+            // Surface = "#ffffff",
+            // Dark = "#212121",
+
+            #endregion
+
+            #region Notification Palette
+
+            // Info = "#00bcd4",
+            // Success = "#4caf50",
+            // Warning = "#ff9800",
+            // Error = "#f44336",
+
+            #endregion
+
+            #region Text Palette
+
+            // AppbarText = "#ffffff",
+            // DrawerText = "#ffffff",
+            // TextPrimary = "#333333",
+            // TextSecondary = "#6c757d",
+            // TextDisabled = "#a9a9a9",
+
+            #endregion
+
+            #region Action Palette
+
+            // ActionDefault = "#2196f3",
+            // ActionDisabled = "#a9a9a9",
+
+            #endregion
+
+            #region Background Palette
+
+            // AppbarBackground = "#2196f3",
+            // Background = "#f5f5f5",
+            // DrawerBackground = "#212121",
+
+            #endregion
+        }
+    };
+
+    void DrawerToggle()
+    {
+        _drawerOpen = !_drawerOpen;
+    }
+}
