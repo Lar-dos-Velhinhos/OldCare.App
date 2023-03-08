@@ -1,4 +1,4 @@
-﻿@page "/login"
+﻿@page "/entrar"
 @using System.ComponentModel.DataAnnotations
 @inject NavigationManager NavigationManager
 @layout EmptyLayout
@@ -7,13 +7,13 @@
 
 <MudPaper Style="background-image: url('https://i.imgur.com/qX8eqRn.png'); background-repeat: no-repeat; background-size: cover; height: 100vh;">
     <MudContainer Fixed="true" Class="d-flex flex-row-reverse align-content-center flex-wrap flex-grow-1 gap-4" Elevation="0" Style="height: 100vh;">
-        <MudPaper Width="30%" Square="true" Elevation="0">
+        <MudPaper Width="40%" Square="true" Elevation="0">
             <MudForm @bind-Errors="@_errors" @bind-IsValid="@_success" @ref="_form">
                 <MudGrid Justify="Justify.Center">
-                    <MudItem xs="12" sm="7">
+                    <MudItem xs="12" sm="12" md="8" lg="8" xl="8" xxl="12">
                         <MudCard Class="pa-4" Elevation="4" Style="font-family: quicksand-regular;">
                             <MudCardContent>
-                                <MudText Align="Align.Center" Typo="Typo.h1" Style="font-family: kanit-bold; font-size: 36pt;">OLDCARE</MudText>
+                                <MudText Align="Align.Center" Typo="Typo.h1" Style="font-family: kanit-bold; font-size: 2vw;">OLDCARE</MudText>
                                 <MudTextField InputType="InputType.Email"
                                               Label="👤 E-mail"
                                               Class="mt-3"
@@ -33,7 +33,6 @@
                             <MudCardActions>
                                 <MudButton ButtonType="ButtonType.Submit"
                                            Class="ml-auto mud-theme-secondary py-3 px-3 rounded-lg"
-                                           Color="Color.Error"
                                            Disabled="@(!_success)"
                                            FullWidth="true"
                                            OnClick="Authenticate"
@@ -59,5 +58,5 @@
     private MudForm _form = new();
     private bool _success = false;
 
-    private void Authenticate() => NavigationManager.NavigateTo("/index");
+    private void Authenticate() => NavigationManager.NavigateTo("/painel");
 }
